@@ -1,0 +1,79 @@
+# --- entorno y python ---
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# --- datos: data/ pesa 10,5 GB y lo regenera la cadena desde data/raw ---
+# data/raw son los insumos crudos: se archivan aparte, no se versionan.
+# data/temp y data/processed los reconstruyen los notebooks.
+data/raw/*
+data/temp/*
+data/processed/*
+!data/raw/.gitkeep
+!data/temp/.gitkeep
+!data/processed/.gitkeep
+
+# --- modelos serializados: glm_model.pkl pesa 283 MB ---
+output/model/*
+!output/model/.gitkeep
+
+# --- credenciales: NUNCA versionar ---
+.env
+
+# --- jupyter ---
+.ipynb_checkpoints/
+.virtual_documents/
+
+# --- logs de compilacion (LaTeX y demas) ---
+*.log
+# excepcion: el registro de auditoria si se versiona, ver .gitattributes
+!logs/log_runs.log
+
+# --- macOS / iCloud ---
+.DS_Store
+._*
+*.icloud
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+.DocumentRevisions-V100
+.AppleDouble
+.LSOverride
+
+# --- Windows ---
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# --- OneDrive / Office: archivos de bloqueo y temporales ---
+~$*
+*.tmp
+
+# --- Dropbox ---
+.dropbox
+.dropbox.attr
+.dropbox.cache
+*conflicted copy*
+*copia en conflicto*
+
+# --- Google Drive ---
+.tmp.driveupload/
+.tmp.drivedownload/
+*.gdoc
+*.gsheet
+*.gslides
+
+# --- LaTeX: reports/slide, reports/document ---
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.nav
+*.snm
+*.synctex.gz
+*.bbl
+*.blg

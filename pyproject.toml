@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nearshoring-oportunidades-colombia"
+version = "0.1.0"
+# el original se desarrollo en CPython 3.10 (ver los .pyc de funciones/).
+# se conserva esa linea para que las cadenas reproduzcan los parquets originales.
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    # nucleo de datos. versiones fijadas a las de la epoca del proyecto:
+    # numpy <2 porque matplotlib 3.8 no lo soporta, y matplotlib <3.9 porque
+    # 3.9 elimino plt.cm.get_cmap(). pandas <3 por resample('Q'), PeriodIndex
+    # y groupby().apply()
+    "numpy==1.26.4",
+    "pandas==2.2.3",
+    # lectura y escritura
+    "pyarrow==16.1.0",   # parquet, formato de exportacion estandar del proyecto
+    "openpyxl==3.1.5",   # excel .xlsx
+    "xlrd==2.0.1",       # excel .xls (correlativas HS, CIIU, IMF)
+    "XlsxWriter==3.2.0", # hojas multiples con pd.ExcelWriter
+    # visualizacion
+    "matplotlib==3.8.4",
+    "seaborn==0.13.2",
+    "squarify==0.4.4",   # treemap de potencial exportador
+    # econometria
+    "scipy==1.13.1",
+    "statsmodels==0.14.4",
+    # grafos: espacio de producto
+    "networkx==3.3",
+    # ingesta
+    "duckdb==1.0.0",     # costos de transporte de EEUU
+    "polars==1.5.0",
+    "tqdm==4.66.5",
+    # emparejamiento difuso de nombres de industria
+    "fuzzywuzzy==0.18.0",
+    "python-Levenshtein==0.25.1",
+    # notebooks
+    "ipykernel==6.29.5",
+]
+
+[project.optional-dependencies]
+# el scraping no se re-ejecuta: su salida esta archivada en data/raw.
+# el grupo queda por si se rehace (ver tools/markdown/rediseno_scraping.md)
+web = ["requests==2.32.3", "beautifulsoup4==4.12.3", "lxml==5.2.2", "pandas-datareader==0.10.0",
+       "html5lib==1.1", "cryptography==43.0.1"]
+# ejecucion de los notebooks por linea de comandos y verificacion de la cadena
+dev = ["nbconvert==7.16.4", "nbformat==5.10.4"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["config"]
+packages = ["funciones"]

@@ -1,0 +1,14 @@
+# El registro de auditoria es append-only: cada corrida agrega lineas al final.
+# merge=union hace que al mezclar ramas git conserve las lineas de ambos lados
+# en vez de marcar conflicto. Sin esto, dos personas corriendo notebooks generan
+# un conflicto en cada merge.
+logs/log_runs.log merge=union
+
+# Los notebooks son JSON: marcarlos como texto evita que git los trate como binarios
+*.ipynb text
+
+# Las tipografias son binarias: sin esto git puede intentar mostrar diffs ilegibles
+# o convertir saltos de linea al clonar en Windows, lo que corrompe el archivo
+*.ttf binary
+*.otf binary
+*.ttc binary

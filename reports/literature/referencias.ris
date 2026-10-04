@@ -1,0 +1,293 @@
+TY  - RPRT
+AU  - Freund, Caroline
+AU  - Pierola, Martha Denisse
+PY  - 2008
+TI  - Export Surges: The Power of a Competitive Currency
+T2  - Policy Research Working Paper
+VL  - 4750
+PB  - The World Bank, Development Research Group
+CY  - Washington, DC
+UR  - https://documents1.worldbank.org/curated/en/778431468320378307/pdf/WPS4750.pdf
+L1  - reports/literature/FreundPierola2008_ExportSurges_WPS4750.pdf
+KW  - episodios de auge exportador
+KW  - export surges
+C1  - Implementado en notebooks/03_models/02_episodios.ipynb y 05_proporciones.ipynb
+N1  - LO QUE DICE EL PAPER, para contrastar contra la implementacion.
+    DESCRIPCION: define y aisla episodios de auge exportador mediante un filtro, siguiendo a
+    Freund (2005) sobre reversiones de cuenta corriente y a Hausmann, Pritchett y Rodrik (2005)
+    sobre aceleraciones de crecimiento. Un auge es "un aumento significativo y sostenido del
+    crecimiento de las exportaciones manufactureras de un periodo de 7 anos al siguiente
+    periodo de 7 anos". El filtro se disena para capturar auges impulsados por la OFERTA, no
+    por la demanda. Se concentran en manufacturas por dos razones explicitas: la expansion
+    manufacturera se asocia al crecimiento en paises en desarrollo, y asi evitan auges causados
+    por booms de precios de materias primas.
+    INPUT: datos de exportacion de COMTRADE, 1980 a 2005, en la clasificacion SITC Rev. 2,
+    capitulos 5 a 8, es decir solo manufacturas. Series por pais. Ademas variables macro y de
+    politica comercial para el analisis posterior: tipo de cambio real, crecimiento del PIB,
+    ahorro, inversion, demanda externa y consumo.
+    PSEUDOCODIGO, los cinco criterios textuales del paper, seccion II:
+      para cada pais y cada posible anio de inicio t:
+          ventana_actual  <- los 7 anos desde t
+          ventana_previa  <- los 7 anos anteriores a t
+          exigir observaciones completas en las dos ventanas; si no, descartar
+          (a) crecimiento real medio de las exportaciones en 7 anos > 6%
+          (b) el crecimiento medio a 7 anos aumenta en un tercio respecto de la ventana previa
+              Y queda al menos 3 puntos porcentuales por encima de ella
+          (c) la participacion media a 7 anos del exportador en sus cinco mercados mayores
+              es superior a la del periodo previo
+          (d) el nivel minimo de exportaciones observado en cada uno de los 7 anos posteriores
+              al auge supera el nivel maximo de cada uno de los 7 anos anteriores al inicio
+          (e) el crecimiento medio durante el auge, EXCLUYENDO el anio de mayor crecimiento,
+              es superior al crecimiento medio previo
+          si se cumplen (a) a (e): registrar el episodio
+    Justificacion de cada criterio, segun el paper: (a) asegura crecimiento fuerte y por encima
+    del promedio mundial; (b) asegura que no sea simple tendencia; (c) asegura que el episodio
+    sea de oferta y no un aumento de demanda de los socios mayores; (d) evita auges producto de
+    volatilidad; (e) excluye auges debidos a un unico anio muy fuerte.
+    OUTPUT: 92 episodios de auge exportador. El horizonte principal es de 7 anos; por robustez
+    replican con ventanas de 5 anos y discuten episodios sostenidos 12 anos. Resultados
+    principales: los auges son mas probables en economias abiertas o en liberalizacion; van
+    precedidos de una depreciacion real grande y de menor volatilidad cambiaria; en paises en
+    desarrollo la depreciacion deja el tipo de cambio subvaluado 20% en promedio; y el margen
+    extensivo, productos y mercados nuevos, aporta el 25% del crecimiento exportador durante
+    los 7 anos del auge.
+ER  - 
+
+TY  - RPRT
+AU  - Henn, Christian
+AU  - Papageorgiou, Chris
+AU  - Romero, Jose Manuel
+AU  - Spatafora, Nikola
+PY  - 2017
+TI  - Export Quality in Advanced and Developing Economies: Evidence from a New Data Set
+T2  - Policy Research Working Paper
+VL  - 8196
+PB  - The World Bank, Jobs Cross Cutting Solution Area
+CY  - Washington, DC
+UR  - https://documents1.worldbank.org/curated/en/393571505412354558/pdf/WPS8196.pdf
+L1  - reports/literature/HennPapageorgiouSpatafora_ExportQuality_WPS8196.pdf
+KW  - calidad de las exportaciones
+KW  - escaleras de calidad
+KW  - frontera mundial de calidad
+C1  - Implementado en src/funciones/estimate_quality.py, que consume 01_cleaning/04_calidad.ipynb
+N1  - LO QUE DICE EL PAPER, para contrastar contra la implementacion.
+    Version original: Henn, Papageorgiou y Spatafora (2013), Export Quality in Developing
+    Countries, IMF Working Paper 13/108. Version publicada: IMF Economic Review (2020). Los
+    datos y estimaciones estan en http://data.imf.org/exportquality
+    DESCRIPCION: la calidad de exportacion no se observa; hay que estimarla. El valor unitario,
+    que si se observa, depende de la calidad, de la tecnologia de produccion y de la distancia.
+    El metodo estima una ecuacion de gravedad aumentada por calidad, siguiendo a Hallak (2006),
+    y construye la calidad como el valor unitario ajustado por diferencias en costos de
+    produccion y por el sesgo de seleccion que introduce la distancia relativa. Se apoya en
+    Schott (2004), que mostro que los valores unitarios varian sistematicamente con la
+    dotacion relativa de factores del exportador, aproximada por el PIB per capita.
+    INPUT: version ampliada del conjunto de datos UN-NBER. Partiendo de COMTRADE construyen un
+    panel de comercio de 1962 a 2014, usando datos reportados por el importador, que consideran
+    mas fiables, y completando con los del exportador donde faltan. Nivel SITC de 4 digitos.
+    Ademas: PIB per capita del importador y del exportador, distancia bilateral, y los
+    controles estandar de gravedad, frontera comun, idioma comun, acuerdo comercial
+    preferencial, relacion colonial y colonizador comun.
+    PSEUDOCODIGO:
+      valor_unitario <- valor exportado / cantidad, a nivel producto-exportador-importador-ano
+      para cada uno de los 835 productos SITC-4:
+          estimar por MINIMOS CUADRADOS EN DOS ETAPAS la ecuacion de gravedad aumentada
+              ln(valor_unitario) ~ efectos fijos de importador + efectos fijos de exportador
+                                   + ln(PIB per capita del IMPORTADOR)
+                                   + ln(distancia) + controles de gravedad
+          el parametro de calidad entra interactuado con el ingreso per capita del importador:
+              si el coeficiente es positivo, mas ingreso implica mayor "demanda de calidad"
+          instrumentar el ingreso per capita del importador, porque esta correlacionado con
+              el termino de perturbacion que contiene la calidad
+      calidad <- valor unitario ajustado por costos de produccion y por el sesgo de seleccion,
+                 reordenando la ecuacion de demanda con los coeficientes estimados
+      para cada (producto, ano):
+          frontera_mundial <- percentil 90 de la calidad en esa combinacion
+      calidad_normalizada <- calidad / frontera_mundial
+      agregar a niveles superiores repitiendo la normalizacion al percentil 90 en cada paso,
+          ponderando por valores de comercio
+    Nota del propio paper: la calidad y la preferencia por calidad del importador no se
+    identifican por separado.
+    OUTPUT: estimaciones de calidad para mas de 20 millones de combinaciones
+    producto-exportador-importador-ano, normalizadas entre 0 y aproximadamente 1,2. La base se
+    agrega tambien por categorias BEC y por los tres sectores amplios de agricultura, materias
+    primas no agricolas y manufacturas. La "escalera de calidad" no es una formula sino un
+    concepto descriptivo: su LONGITUD es la dispersion de calidad entre paises dentro de un
+    sector y la POSICION del pais en ella indica cuanto margen de mejora le queda. Hallazgo
+    central: una vez que la calidad de un pais alcanza cerca del 85% de la frontera mundial,
+    calidad y valores unitarios dejan de estar correlacionados.
+ER  - 
+
+TY  - RPRT
+AU  - Decreux, Yvan
+AU  - Spies, Julia
+PY  - 2016
+TI  - Export Potential Assessments: A methodology to identify export opportunities for developing countries
+PB  - International Trade Centre
+CY  - Ginebra
+UR  - https://umbraco.exportpotential.intracen.org/media/cklh2pi5/epa-methodology_230627.pdf
+L1  - reports/literature/ITC_DecreuxSpies_EPA_Methodology_2023.pdf
+KW  - potencial exportador
+KW  - Export Potential Map
+C1  - Implementado en 00_download/03_potencial_exportador_itc.ipynb y 01_cleaning/05_potencial_exportador.ipynb
+N1  - LO QUE DICE EL DOCUMENTO, para contrastar contra la implementacion.
+    El PDF archivado es la version vigente de la metodologia, del 27 de junio de 2023. La
+    referencia de 2016 es el mimeo original de Decreux y Spies; despues contribuyeron Cantero,
+    Heuser, Ochem, Perillat, Ouriques Poffo, Seiermann y Stevens, entre otros.
+    DESCRIPCION: descompone las exportaciones potenciales de un pais en tres factores, OFERTA,
+    DEMANDA y FACILIDAD PARA COMERCIAR, bajo el supuesto de que en un mundo sin fricciones los
+    flujos de comercio se describen como su combinacion. Ofrece dos indicadores:
+      - EPI, indicador de potencial exportador, para productos que el pais YA exporta de forma
+        competitiva y que tienen buenas perspectivas en un mercado dado. Margen intensivo.
+        Inspirado en un marco de tipo gravitacional; la capacidad de oferta se captura mediante
+        participaciones de mercado PROYECTADAS.
+      - PDI, indicador de diversificacion de producto, para productos que el pais AUN NO
+        exporta competitivamente pero que parecen factibles dada su canasta actual y la de
+        paises similares. Margen extensivo. Se apoya en el espacio de producto de Hausmann e
+        Hidalgo, corrigiendolo por dotaciones naturales para responder a la critica de que el
+        espacio de producto es puramente de oferta.
+    El trabajo de Nearshoring usa el EPI.
+    INPUT: datos detallados de comercio y de acceso a mercados. Distancias de la base GeoDist
+    del CEPII (Mayer y Zignago, 2011). Proyecciones de crecimiento del PIB y de la poblacion, y
+    aranceles prospectivos: la metodologia es explicitamente PROSPECTIVA. Los productos
+    minerales primarios, capitulos 25 y 26 del Sistema Armonizado, se excluyen del calculo de
+    la facilidad, porque el comercio de materias primas en bruto no lo controla el pais sino
+    grandes empresas extranjeras.
+    PSEUDOCODIGO:
+      Supply_ik   <- capacidad de oferta del exportador i en el producto k,
+                     a partir de su participacion de mercado mundial PROYECTADA
+      Demand_ijk  <- demanda proyectada del mercado j por el producto k
+      Ease_ij     <- facilidad de comercio entre i y j; > 1 si i comercia con j mas de lo que
+                     cabria esperar por la participacion mundial de i en todos los productos
+                     (proximidad geografica, idioma, cultura, vinculos comerciales establecidos)
+      EPI_ijk     <- Supply_ik x Ease_ij x Demand_ijk
+      normalizar de modo que la suma sobre i reproduzca la demanda proyectada del mercado
+      Potencial_no_realizado_ijk <- EPI_ijk - min(exportaciones_observadas_ijk, EPI_ijk)
+                                    (cero si lo exportado ya supera el potencial)
+    Equivale empiricamente a una especificacion con efectos fijos pais x producto,
+    importador x producto y pais x importador, pero evita el costo computacional de estimarla a
+    nivel de producto detallado.
+    OUTPUT: un valor en dolares de potencial exportador por trio exportador-mercado-producto, y
+    el potencial no realizado, que es la brecha entre lo que el pais podria exportar y lo que
+    exporta. El documento sostiene que esa brecha se debe a falta de informacion sobre reglas y
+    regulaciones del mercado destino, dificultades para cumplirlas, o incapacidad de satisfacer
+    las preferencias de precio o calidad del consumidor, y que son factores sobre los que las
+    instituciones de apoyo al comercio si pueden actuar. Una parte de la brecha, sin embargo,
+    es puramente mecanica: la metodologia proyecta oferta y demanda hacia el futuro.
+    Los resultados se publican en exportpotential.intracen.org
+ER  - 
+
+TY  - JOUR
+AU  - Hidalgo, César A.
+AU  - Klinger, Bailey
+AU  - Barabási, Albert-László
+AU  - Hausmann, Ricardo
+PY  - 2007
+TI  - The Product Space Conditions the Development of Nations
+JO  - Science
+VL  - 317
+IS  - 5837
+SP  - 482
+EP  - 487
+DO  - 10.1126/science.1144581
+L1  - reports/literature/Hidalgo2007_ProductSpace_Science.pdf
+KW  - espacio de producto
+KW  - proximidad entre productos
+C1  - Implementado en src/funciones/build_product_space.py, que consume 01_cleaning/03_product_space.ipynb
+N1  - LO QUE DICE EL PAPER, para contrastar contra la implementacion.
+    DESCRIPCION: en lugar de suponer a priori en que dimension se parecen dos bienes, adoptan
+    una medida "agnostica" y basada en resultados: si dos bienes requieren instituciones,
+    infraestructura, factores o tecnologia similares, tenderan a producirse en tandem. A esa
+    medida la llaman PROXIMIDAD. El ejemplo del paper: quien exporta manzanas tendra casi todas
+    las condiciones para exportar peras (suelo, clima, empaque, camiones frigorificos,
+    agronomos, leyes fitosanitarias), mientras que ninguna de esas capacidades sirve para
+    alambre de cobre o electrodomesticos.
+    INPUT: datos de comercio internacional limpiados y hechos compatibles por el proyecto del
+    National Bureau of Economic Research dirigido por R. Feenstra, desagregados en SITC a
+    cuatro digitos, 775 clases de producto, para el periodo 1998-2000. Para cada pais, el valor
+    exportado a todos los demas.
+    PSEUDOCODIGO:
+      RCA(c,i) <- [ x(c,i) / suma_i x(c,i) ] / [ suma_c x(c,i) / suma_{c,i} x(c,i) ]
+                  (ventaja comparativa revelada de Balassa; el pais c exporta mas del bien i,
+                   como proporcion de sus exportaciones, que el pais "promedio", si RCA > 1)
+      para cada par de productos (i, j):
+          phi(i,j) <- min{ P(RCA_i | RCA_j) , P(RCA_j | RCA_i) }
+                      es decir, el MINIMO de las dos probabilidades condicionales de que un
+                      pais exporte un bien dado que exporta el otro
+      construir la matriz 775 x 775 de proximidades
+      para visualizar la red con los 775 productos conectados:
+          calcular el ARBOL GENERADOR MAXIMO, los 774 enlaces que maximizan la proximidad
+          superponer todos los enlaces con proximidad mayor que 0,55
+          (en total 1.525 enlaces)
+    OUTPUT: la matriz de proximidades de 775 x 775 y la red del espacio de producto. La
+    distribucion de phi es muy sesgada: 5% de los elementos son exactamente cero, 32% son
+    menores que 0,1 y 65% quedan por debajo de 0,2, lo que motiva la representacion en red. La
+    estructura resultante es modular y de nucleo-periferia: el nucleo lo forman metales,
+    maquinaria y quimicos; la periferia, pesca y agricultura tropical y de cereales arriba, un
+    conglomerado fuerte de confecciones y textiles a la izquierda, agricultura animal, y un
+    gran conglomerado de electronica abajo. La tesis del paper es que la posicion de un pais en
+    ese espacio condiciona su desarrollo: es mas facil moverse hacia productos proximos.
+ER  - 
+
+TY  - RPRT
+AU  - United Nations Statistics Division
+PY  - 2018
+TI  - Classification by Broad Economic Categories, Rev. 5
+T2  - Statistical Papers, Series M
+VL  - 53
+PB  - Naciones Unidas
+CY  - Nueva York
+L1  - reports/literature/UN2018_BEC_Rev5_Manual.pdf
+KW  - clasificacion de bienes
+KW  - BEC
+KW  - cadenas globales de valor
+C1  - Implementado en notebooks/01_cleaning/01_correlativas_hs.ipynb
+N1  - LO QUE DICE EL MANUAL, para contrastar contra la implementacion.
+    DESCRIPCION: clasifica los productos del comercio internacional segun su USO FINAL
+    economico. La quinta revision, avalada por la Comision de Estadistica en marzo de 2016, es
+    resultado de un proceso de varios anos y produce una estructura mas detallada y mas logica
+    que la anterior: responde a la necesidad de categorias economicas mas pertinentes, incluye
+    SERVICIOS ademas de bienes, y distingue con mas claridad el uso final de los productos.
+    Las categorias amplias nuevas son "mineria y energia", "construccion y vivienda", "textil y
+    calzado", "informacion y comunicacion" y "salud y educacion".
+    Para el analisis de CADENAS GLOBALES DE VALOR, que es el uso que le da este trabajo, lo
+    pertinente es que BEC Rev.5 introduce una dimension nueva dentro de los bienes intermedios
+    procesados: distingue los intermedios GENERICOS de los ESPECIFICADOS.
+    INPUT: las tablas de correspondencia entre el Sistema Armonizado y las categorias BEC que
+    acompanan al manual.
+    PSEUDOCODIGO:
+      leer la correspondencia entre subpartida del Sistema Armonizado y categoria BEC
+      asignar a cada producto su categoria de uso final
+      opcionalmente, agregar a las categorias amplias de consumo, intermedios y capital
+    OUTPUT: cada producto queda etiquetado por uso final, lo que permite separar los bienes que
+    entran a cadenas de valor de los que se consumen directamente.
+ER  - 
+
+TY  - RPRT
+AU  - Banco Interamericano de Desarrollo
+PY  - 2023
+TI  - Cadenas de valor sustentables: oportunidades y desafíos de integración productiva y descarbonización en Colombia, Perú y Ecuador
+PB  - Banco Interamericano de Desarrollo
+CY  - Washington, DC
+KW  - cadenas de valor
+N1  - Referencia institucional. Aparece en la seccion de referencias de
+    20241029 Metodologia Estudio Nearshoring.docx, en la carpeta de la propuesta. No se
+    encontro el PDF en el material migrado, de modo que no se pudo resumir su metodologia.
+ER  - 
+
+TY  - RPRT
+AU  - Beverinotti, Javier
+AU  - Grosman, Nicolás
+AU  - Puyana, Rafael
+PY  - 2025
+TI  - Oportunidades de acortamiento de cadenas de valor en Colombia: los casos de los sectores automotriz, textiles y confecciones, plástico y caucho y pesca
+PB  - Fedesarrollo y Banco Interamericano de Desarrollo
+CY  - Bogotá
+KW  - nearshoring
+KW  - acortamiento de cadenas de valor
+N1  - Referencia institucional. Figura como "proximamente" en la seccion de referencias de
+    20241029 Metodologia Estudio Nearshoring.docx. Es el antecedente directo de este trabajo y
+    probablemente lo que el deck y el capitulo citan como "Fedesarrollo (2024)" y
+    "Fedesarrollo (2025)", dos etiquetas que no tienen entrada bibliografica en ninguno de los
+    dos entregables. No se encontro el PDF en el material migrado. Confirmar el ano y el estado
+    de publicacion antes de citarlo.
+ER  - 
