@@ -30,7 +30,7 @@
 
 \begin{frame}{Objetivo general}
     \begin{itemize}
-        \item Presentar la metodología desarrollada por Fedesarrollo para cuantificar el tamaño de la oportunidad y social de las oportunidades identificadas en el estudio de Nearshoring y atracción de inversión en Colombia.
+        \item Presentar la metodología desarrollada por Fedesarrollo para cuantificar el tamaño de la oportunidad económica y social de las oportunidades identificadas en el estudio de Nearshoring y atracción de inversión en Colombia.
         \item Explicar las etapas del ejercicio: 
         \begin{enumerate}
             \item Identificación de episodios exportadores
@@ -48,7 +48,7 @@
         \item \textbf{Identificación de episodios de exportación}
         \item \textbf{Estimación y proyección del modelo GLM}
         \item \textbf{Análisis de PIB con la MIO y Valor Agregado}
-        \item \textbf{Cálculo del oportunidad en pobreza y empleo}
+        \item \textbf{Cálculo de la oportunidad en pobreza y empleo}
     \end{enumerate}
 \end{frame}
 
@@ -60,7 +60,7 @@
         \item \textbf{Identificación de episodios de exportación}
         \item \textcolor{gray!70}{Estimación y proyección del modelo GLM}
         \item \textcolor{gray!70}{Análisis de PIB con la MIO y Valor Agregado}
-        \item \textcolor{gray!70}{Cálculo del oportunidad en pobreza y empleo}
+        \item \textcolor{gray!70}{Cálculo de la oportunidad en pobreza y empleo}
     \end{enumerate}
 \end{frame}
 
@@ -79,7 +79,7 @@
         \begin{itemize}
             \item Se exige que el comercio de la tupla entre periodos sea continuo entre los años del periodo.
             \item Se excluyen las series con máximos en el primer año.
-        \end{itemize}la naturaleza del análisis, los datos nominales se deflactan a dólares reales del 2019.
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -186,7 +186,7 @@ Los episodios deben cumplir los siguientes criterios:
         \item \textcolor{gray!70}{Identificación de episodios de exportación}
         \item \textbf{Estimación y proyección del modelo GLM}
         \item \textcolor{gray!70}{Análisis de PIB con la MIO y Valor Agregado}
-        \item \textcolor{gray!70}{Cálculo del oportunidad en pobreza y empleo}
+        \item \textcolor{gray!70}{Cálculo de la oportunidad en pobreza y empleo}
     \end{enumerate}
 \end{frame}
 
@@ -508,15 +508,15 @@ El promedio cumple tres funciones estadísticas fundamentales:
         \item \textcolor{gray!70}{Identificación de episodios de exportación}
         \item \textcolor{gray!70}{Estimación y proyección del modelo GLM}
         \item \textbf{Análisis de PIB con la MIO y Valor Agregado}
-        \item \textcolor{gray!70}{Cálculo del oportunidad en pobreza y empleo}
+        \item \textcolor{gray!70}{Cálculo de la oportunidad en pobreza y empleo}
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Para medir ese oportunidad, utilizamos la metodología de Matriz Insumo–Producto}
+\begin{frame}{Para medir esa oportunidad, utilizamos la metodología de Matriz Insumo–Producto}
     \begin{itemize}
         \item La Matriz Insumo–Producto (MIO) del DANE permite representar cómo los sectores de la economía colombiana están conectados entre sí, mostrando qué industrias compran y venden bienes y servicios a otras.
         \item En el contexto de este estudio, la MIO se utiliza para cuantificar cómo un choque positivo en la demanda externa se traduce en un aumento de producción, valor agregado y, finalmente, del PIB nacional.
-        \item La metodología ofrece una visión integral del oportunidad macroeconómico de un auge exportador, considerando los encadenamientos productivos y la estructura sectorial propia de la economía colombiana.
+        \item La metodología ofrece una visión integral de la oportunidad macroeconómica de un auge exportador, considerando los encadenamientos productivos y la estructura sectorial propia de la economía colombiana.
     \end{itemize}
 \end{frame}
 
@@ -525,7 +525,7 @@ El promedio cumple tres funciones estadísticas fundamentales:
         \item Este bloque analiza cómo el crecimiento de las exportaciones se traduce en mayor producción y actividad económica dentro del país.
         \item Para hacerlo, se utiliza la Matriz de multiplicadores de Leontief obtenidas de la Matriz Insumo–Producto del DANE, que permite observar cómo los sectores están interconectados y cómo un aumento en la demanda externa se propaga por toda la economía.
         \item A partir de esta matriz, se estiman los efectos directos en las industrias exportadoras y los efectos indirectos sobre sus proveedores nacionales.
-        \item Se incorporan los coeficientes de valor agregado para convertir el aumento en producción en una estimación del oportunidad sobre el PIB, diferenciando su contribución por sector y capturando valores año a año.
+        \item Se incorporan los coeficientes de valor agregado para convertir el aumento en producción en una estimación de la oportunidad sobre el PIB, diferenciando su contribución por sector y capturando valores año a año.
     \end{itemize}
 \end{frame}
 
@@ -632,7 +632,7 @@ El promedio cumple tres funciones estadísticas fundamentales:
 \end{frame}
 
 \begin{frame}{Conversión del aumento de producción en oportunidad sobre el PIB colombiano}
-    \textbf{2. Estimación del oportunidad sobre el PIB}
+    \textbf{2. Estimación de la oportunidad sobre el PIB}
     \[
         \Delta PIB = VA' \, \Delta \mathcal{X} = VA' (I - \mathcal{A})^{-1} \, \Delta \mathcal{Y}
     \]
@@ -676,11 +676,11 @@ El promedio cumple tres funciones estadísticas fundamentales:
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Consolidamos los resultados del bootstrap para obtener intervalos de confianza del oportunidad económico}
+\begin{frame}{Consolidamos los resultados del bootstrap para obtener intervalos de confianza de la oportunidad económica}
     \begin{itemize}
         \item Para identificar la incertidumbre, realizamos un conjunto de simulaciones independientes basadas en los diferentes escenarios del bootstrap, donde cada uno refleja una posible combinación de productos exitosos.
         \item Con las 1.000 submuestras de datos, se construyen distribuciones empíricas de las principales variables de interés: cambio en el PIB y en exportaciones.
-        \item A partir de esas distribuciones se obtienen las medias y los intervalos de confianza al 95 por ciento (percentiles 2.5 y 97.5), que reflejan el rango estadísticamente probable del oportunidad económico del auge exportador.
+        \item A partir de esas distribuciones se obtienen las medias y los intervalos de confianza al 95 por ciento (percentiles 2.5 y 97.5), que reflejan el rango estadísticamente probable de la oportunidad económica del auge exportador.
     \end{itemize}
 \end{frame}
 
@@ -720,22 +720,22 @@ El promedio cumple tres funciones estadísticas fundamentales:
 %\end{frame}
 
 %==================================
-% BLOQUE 4 — Cálculo del oportunidad en pobreza y empleo
+% BLOQUE 4 — Cálculo de la oportunidad en pobreza y empleo
 %==================================
 \begin{frame}{Estructura general de la metodología}
     \begin{enumerate}
         \item \textcolor{gray!70}{Identificación de episodios de exportación}
         \item \textcolor{gray!70}{Estimación y proyección del modelo GLM}
         \item \textcolor{gray!70}{Análisis de PIB con la MIO y Valor Agregado}
-        \item \textbf{Cálculo del oportunidad en pobreza y empleo}
+        \item \textbf{Cálculo de la oportunidad en pobreza y empleo}
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Cómo traducimos el oportunidad económico en efectos sociales y fiscales}
+\begin{frame}{Cómo traducimos la oportunidad económica en efectos sociales y fiscales}
     \begin{itemize}
         \item Este bloque traduce el incremento estimado del PIB, derivado del auge exportador, en oportunidads sociales y fiscales medibles sobre empleo, pobreza y recaudo.
         \item Se utilizan elasticidades macroeconómicas oficiales estimadas por el DANE, el equipo DAMS y el Ministerio de Hacienda, que permiten vincular los cambios en el PIB con variaciones en los indicadores sociales.
-        \item Las estimaciones se aplican sobre los resultados del \(\Delta PIB\) obtenido en el análisis con la Matriz Insumo–Producto, garantizando consistencia entre el oportunidad económico y los efectos distributivos.
+        \item Las estimaciones se aplican sobre los resultados del \(\Delta PIB\) obtenido en el análisis con la Matriz Insumo–Producto, garantizando consistencia entre la oportunidad económica y los efectos distributivos.
     \end{itemize}
 \end{frame}
 
@@ -792,7 +792,7 @@ El promedio cumple tres funciones estadísticas fundamentales:
 \end{frame}
 
 \begin{frame}
-\frametitle{En los próximos 20 años, se estimó el oportunidad de política por periodo}
+\frametitle{En los próximos 20 años, se estimó la oportunidad de política por periodo}
 
 % Definir los colores necesarios
 \definecolor{azulclaro}{RGB}{173, 216, 230}
