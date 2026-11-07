@@ -77,3 +77,7 @@ $RECYCLE.BIN/
 *.synctex.gz
 *.bbl
 *.blg
+
+# comentarios internos del deck: no se publican
+reports/slide/comentarios/*.pptx
+reports/slide/comentarios/SEGUIMIENTO.md
